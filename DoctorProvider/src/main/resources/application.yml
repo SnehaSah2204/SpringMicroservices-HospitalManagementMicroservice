@@ -1,0 +1,21 @@
+server:
+#  port: 5001
+#  port: 5002
+#  port: 5003
+  port: 5004
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/deloitte_db
+    username: root
+    password: User
+  
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  
+  application:
+    name: DOCTOR-MS

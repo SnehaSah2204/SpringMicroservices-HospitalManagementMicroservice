@@ -1,0 +1,64 @@
+#server configuration
+server:
+  port: 5005
+  
+  
+  
+#Datasource configuration  
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/deloitte_db
+    username: root
+    password: User
+  
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+        
+  application:
+    name: PATIENT-MS
+ 
+ 
+    
+#Actuator configuration
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+ 
+ 
+#Resilience Configuration     
+resilience4j:
+  circuitbreaker:
+    instances:
+      A-Service:
+       registerHealthIndicator: true
+       eventConsumerBufferSize: 10
+       failureRateThreshold: 50
+       minimumNumberOfCalls: 5
+       automaticTransitionFromOpenToHalfOpenEnabled: true
+       waitDurationInOpenState: 5s
+       permittedNumberOfCallsInHalfOpenState: 3
+       slidingWindowSize: 10
+       slidingWindowType: COUNT_BASED
+  
+  
+#Ribbon Configuration     
+DOCTOR-MS:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:5001,localhost:5002,localhost:5003,localhost:5004
+    ServerListRefreshInterval: 15000
+
+
